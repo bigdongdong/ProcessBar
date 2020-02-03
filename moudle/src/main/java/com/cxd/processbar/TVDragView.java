@@ -24,8 +24,8 @@ public class TVDragView extends LinearLayout {
 
         tv = new TextView(context);
         tv.setLayoutParams(new RelativeLayout.LayoutParams(120,100));
-        tv.setGravity(Gravity.CENTER|Gravity.LEFT);
-        tv.setPadding(30,0,0,0);
+        tv.setGravity(Gravity.CENTER);
+//        tv.setPadding(30,0,0,0);
         tv.setTextSize(14);
         tv.setTextColor(Color.WHITE);
         GradientDrawable gd = new GradientDrawable();

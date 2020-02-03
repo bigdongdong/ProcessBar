@@ -11,48 +11,54 @@ import android.widget.LinearLayout;
  */
 public class VerticalProcessOptions {
 
+    /*父布局的属性设置*/
     public int backColor ;
     public int backRadius ;
-    public int topAndBottomMargin ; //上下的margin
-//    public boolean isHorizontalCenter = true; //是否水平居中 ，默认居中
+    
+    /*bar的属性*/
     public int barColor ;
     public int barRadius ;
     public int barFillColor ;
     public int barWidth ;
-    public View dragView ;
-    public int dragViewOffset ; //正是向右，垂直方向默认居中（与当前进度点重合）
-    public IProcessListener iProcessListener ;
+    public int barMargin ; //上下的margin
+    
+    /*滑块属性*/
+    public View slider ;
+    public int sliderOffset ; //正是向右，垂直方向默认居中（与当前进度点重合）
+    
+    /*进度条方向*/
     public GradientDrawable.Orientation direction = GradientDrawable.Orientation.TOP_BOTTOM; //TOP_BOTTOM  or BOTTOM_TOP
-    public int process ; //这里设置是初始进度值
+    
+    /*进度条初始进度值*/
+    public int initialProcess; //这里设置是初始进度值
 
     public VerticalProcessOptions(Builder builder) {
         this.backColor = builder.backColor ;
         this.backRadius = builder.backRadius ;
-        this.topAndBottomMargin = builder.topAndBottomMargin ;
+        this.barMargin = builder.barMargin ;
         this.barColor = builder.barColor ;
         this.barRadius = builder.barRadius ;
         this.barFillColor = builder.barFillColor ;
         this.barWidth = builder.barWidth ;
-        this.dragView = builder.dragView ;
-        this.dragViewOffset = builder.dragViewOffset ;
+        this.slider = builder.slider ;
+        this.sliderOffset = builder.sliderOffset ;
         this.direction = builder.direction ;
-        this.process = builder.process ;
+        this.initialProcess = builder.initialProcess ;
     }
 
     public static class Builder{
 
         private int backColor ;
         private int backRadius ;
-        private int topAndBottomMargin ; //上下的margin
-        //    private boolean isHorizontalCenter = true; //是否水平居中 ，默认居中
+        private int barMargin ; //上下的margin
         private int barColor ;
         private int barRadius ;
         private int barFillColor ;
         private int barWidth ;
-        private View dragView ;
-        private int dragViewOffset ; //正是向右，垂直方向默认居中（与当前进度点重合）
+        private View slider ;
+        private int sliderOffset ; //正是向右，垂直方向默认居中（与当前进度点重合）
         private GradientDrawable.Orientation direction = GradientDrawable.Orientation.TOP_BOTTOM; //TOP_BOTTOM  or BOTTOM_TOP
-        private int process ; //这里设置是初始进度值
+        private int initialProcess ; //这里设置是初始进度值
 
         public Builder backColor(int backColor){
             this.backColor = backColor ;
@@ -62,8 +68,8 @@ public class VerticalProcessOptions {
             this.backRadius = backRadius ;
             return this ;
         }
-        public Builder topAndBottomMargin(int topAndBottomMargin){
-            this.topAndBottomMargin = topAndBottomMargin ;
+        public Builder barMargin(int barMargin){
+            this.barMargin = barMargin ;
             return this ;
         }
         public Builder barColor(int barColor){
@@ -82,16 +88,16 @@ public class VerticalProcessOptions {
             this.barWidth = barWidth ;
             return this ;
         }
-        public Builder dragView(View dragView){
-            this.dragView = dragView ;
+        public Builder slider(View slider){
+            this.slider = slider ;
             return this ;
         }
-        public Builder dragViewOffset(int dragViewOffset){
-            this.dragViewOffset = dragViewOffset ;
+        public Builder sliderOffset(int sliderOffset){
+            this.sliderOffset = sliderOffset ;
             return this ;
         }
-        public Builder process(int process){
-            this.process = process ;
+        public Builder initialProcess(int initialProcess){
+            this.initialProcess = initialProcess ;
             return this ;
         }
         /**

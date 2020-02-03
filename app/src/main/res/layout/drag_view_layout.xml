@@ -10,15 +10,41 @@
         android:id="@+id/tv"
         android:background="#50111111"
         tools:text="99"
-        android:visibility="invisible"
         android:textSize="17sp"
         android:textColor="#FFFFFF"
         android:gravity="center"
         android:layout_width="120px"
-        android:layout_height="90px"/>
+        android:layout_height="match_parent"/>
 
-    <View
+    <LinearLayout
         android:background="#FFFFFF"
-        android:layout_width="100px"
-        android:layout_height="100px"/>
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_width="90px"
+        android:layout_height="match_parent">
+        <View
+            android:layout_marginLeft="20px"
+            android:layout_marginRight="20px"
+            android:layout_marginTop="10px"
+            android:layout_marginBottom="10px"
+            android:background="#666666"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <View
+            android:layout_marginLeft="20px"
+            android:layout_marginRight="20px"
+            android:layout_marginTop="10px"
+            android:layout_marginBottom="10px"
+            android:background="#666666"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <View
+            android:layout_marginLeft="20px"
+            android:layout_marginRight="20px"
+            android:layout_marginTop="10px"
+            android:layout_marginBottom="10px"
+            android:background="#666666"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+    </LinearLayout>
 </LinearLayout>

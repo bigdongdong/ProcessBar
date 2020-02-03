@@ -28,7 +28,7 @@ public class VerticalProcessBar extends RelativeLayout {
     private VerticalProcessOptions options ;
     private Context context ;
     private Bar bar ;
-    private int dragViewW,dragViewH ;
+    private int sliderW,sliderH ;
     private int width , height;
 
     @SuppressLint("ClickableViewAccessibility")
@@ -53,43 +53,43 @@ public class VerticalProcessBar extends RelativeLayout {
         bar = new Bar(context);
         this.addView(bar);
 
-        /*添加dragView*/
-        if(options.dragView != null){
-            this.addView(options.dragView);
+        /*添加slider*/
+        if(options.slider != null){
+            this.addView(options.slider);
 
             /*设置初始位位置*/
 //            final int[] lastP = new int[]{0};
-            options.dragView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            options.slider.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {
-                    dragViewW = options.dragView.getWidth() ;
-                    dragViewH = options.dragView.getHeight();
-                    if(dragViewH > 0){
-//                        options.dragView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    sliderW = options.slider.getWidth() ;
+                    sliderH = options.slider.getHeight();
+                    if(sliderH > 0){
+//                        options.slider.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
                         int processH = 0 ; //进度条中的h
                         if(options.direction == GradientDrawable.Orientation.TOP_BOTTOM){
                             /*根据process值移动到对应地方*/
-                            processH = (int) ((options.process * 1.0f )/ 100 * (height - options.topAndBottomMargin * 2));
+                            processH = (int) ((options.initialProcess * 1.0f )/ 100 * (height - options.barMargin * 2));
                         }else if(options.direction == GradientDrawable.Orientation.BOTTOM_TOP){
-                            processH = (int) (((100 - options.process) * 1.0f )/ 100 * (height - options.topAndBottomMargin * 2));
+                            processH = (int) (((100 - options.initialProcess) * 1.0f )/ 100 * (height - options.barMargin * 2));
                         }
 
-//                        lastP[0] = processH + options.topAndBottomMargin;
+//                        lastP[0] = processH + options.barMargin;
 
-                        /*dragView初始位置*/
-                        /*options.dragViewOffset + options.dragView.getWidth() */
-//                        options.dragView.layout(options.dragViewOffset,options.topAndBottomMargin + processH - dragViewH / 2,
-//                                options.dragViewOffset + dragViewW, options.topAndBottomMargin + processH + dragViewH / 2 );
-//                        Log.i(TAG, "onGlobalLayout: options.dragView.getWidth() = " +options.dragView.getWidth());
-                        options.dragView.layout(options.dragViewOffset,options.topAndBottomMargin + processH - dragViewH / 2,
-                                width, options.topAndBottomMargin + processH + dragViewH / 2 );
-                        Log.i(TAG, "onGlobalLayout: dragViewW = " +dragViewW);
+                        /*slider初始位置*/
+                        /*options.sliderOffset + options.slider.getWidth() */
+//                        options.slider.layout(options.sliderOffset,options.barMargin + processH - sliderH / 2,
+//                                options.sliderOffset + sliderW, options.barMargin + processH + sliderH / 2 );
+//                        Log.i(TAG, "onGlobalLayout: options.slider.getWidth() = " +options.slider.getWidth());
+                        options.slider.layout(options.sliderOffset,options.barMargin + processH - sliderH / 2,
+                                width, options.barMargin + processH + sliderH / 2 );
+                        Log.i(TAG, "onGlobalLayout: sliderW = " +sliderW);
                     }
                 }
             });
 
-            options.dragView.setOnTouchListener(new OnTouchListener() {
+            options.slider.setOnTouchListener(new OnTouchListener() {
                 float downY = 0;
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
@@ -104,19 +104,19 @@ public class VerticalProcessBar extends RelativeLayout {
                             break;
                         case MotionEvent.ACTION_MOVE:
                             float offsetY = event.getY() - downY ;
-//                            Log.i(TAG, "onTouch: options.dragView.getTop() = "+options.dragView.getTop());
-                            if(options.dragView.getTop() + offsetY < options.topAndBottomMargin - dragViewH / 2 ||
-                                    options.dragView.getTop() + offsetY > height - options.topAndBottomMargin - dragViewH / 2){
+//                            Log.i(TAG, "onTouch: options.slider.getTop() = "+options.slider.getTop());
+                            if(options.slider.getTop() + offsetY < options.barMargin - sliderH / 2 ||
+                                    options.slider.getTop() + offsetY > height - options.barMargin - sliderH / 2){
 
                             }else{
-                                options.dragView.layout(options.dragView.getLeft(), (int) (options.dragView.getTop() + offsetY),
-                                        options.dragView.getRight(), (int) (options.dragView.getBottom() + offsetY));
+                                options.slider.layout(options.slider.getLeft(), (int) (options.slider.getTop() + offsetY),
+                                        options.slider.getRight(), (int) (options.slider.getBottom() + offsetY));
                             }
 
                             setProcess(getCurrentProcess());
 
-                            if(options.dragView instanceof TVDragView){
-                                TVDragView view = (TVDragView) options.dragView;
+                            if(options.slider instanceof TVDragView){
+                                TVDragView view = (TVDragView) options.slider;
                                 view.setText(getCurrentProcess()+"");
                             }
 
@@ -152,12 +152,12 @@ public class VerticalProcessBar extends RelativeLayout {
     }
 
     private int getCurrentProcess () {
-       int totalProcessH = height - 2 * options.topAndBottomMargin ;
+       int totalProcessH = height - 2 * options.barMargin ;
        int currentProcessH = 0 ;
        if(options.direction == GradientDrawable.Orientation.TOP_BOTTOM){
-           currentProcessH = options.dragView.getTop() + dragViewH / 2 - options.topAndBottomMargin  ;
+           currentProcessH = options.slider.getTop() + sliderH / 2 - options.barMargin  ;
        }else if(options.direction == GradientDrawable.Orientation.BOTTOM_TOP){
-           currentProcessH = totalProcessH - (options.dragView.getTop() + dragViewH / 2 - options.topAndBottomMargin) ;
+           currentProcessH = totalProcessH - (options.slider.getTop() + sliderH / 2 - options.barMargin) ;
        }
 
        float bili = (currentProcessH * 1.0f) / (totalProcessH * 1.0f) ;
@@ -181,7 +181,7 @@ public class VerticalProcessBar extends RelativeLayout {
         }
 
 
-        options.process = process ;
+        options.initialProcess = process ;
         bar.postInvalidate();
     }
 
@@ -199,7 +199,7 @@ public class VerticalProcessBar extends RelativeLayout {
             super(context);
 
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(options.barWidth,-1) ;
-            params.topMargin = params.bottomMargin = options.topAndBottomMargin ;
+            params.topMargin = params.bottomMargin = options.barMargin ;
             params.addRule(RelativeLayout.CENTER_HORIZONTAL);
             this.setLayoutParams(params);
 
@@ -246,9 +246,8 @@ public class VerticalProcessBar extends RelativeLayout {
 
             if(options.direction == GradientDrawable.Orientation.TOP_BOTTOM){
                 /*自上而下*/
-                int h = (int) ((options.process * 1.0f )/ 100 * height);
+                int h = (int) ((options.initialProcess * 1.0f )/ 100 * height);
 
-                //没有圆角直接添加矩形
                 rectf.set(0,0,options.barWidth,h);
                 path.addRect(rectf, Path.Direction.CCW);
                 path.close();
@@ -277,9 +276,8 @@ public class VerticalProcessBar extends RelativeLayout {
 
             }else if(options.direction == GradientDrawable.Orientation.BOTTOM_TOP){
                 /*自下而上*/
-                int h = (int) (((100 - options.process) * 1.0f )/ 100 * height);
+                int h = (int) (((100 - options.initialProcess) * 1.0f )/ 100 * height);
 
-                //没有圆角直接添加矩形
                 rectf.set(0,h,options.barWidth,height);
                 path.addRect(rectf, Path.Direction.CCW);
                 path.close();
