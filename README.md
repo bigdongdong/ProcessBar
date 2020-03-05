@@ -1,16 +1,16 @@
 # ProcessBar
 
-# ÏîÄ¿ÅäÖÃ
+# ä½¿ç”¨æ–¹å¼
 
 ```
   allprojects {
       repositories {
           ...
-          maven { url 'https://jitpack.io' }  //Ìí¼Ójitpack²Ö¿â
+          maven { url 'https://jitpack.io' }  
       }
   }
   
   dependencies {
-	  implementation 'com.github.bigdongdong:ProcessBar:1.0' //Ìí¼ÓÒÀÀµ
+	  implementation 'com.github.bigdongdong:ProcessBar:1.0' 
   }
 ```
