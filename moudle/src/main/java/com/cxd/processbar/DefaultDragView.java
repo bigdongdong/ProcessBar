@@ -35,7 +35,7 @@ public class DefaultDragView extends View {
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setStyle(Paint.Style.FILL);
-        paint.setColor(Color.parseColor("#70FFFFFF"));
+        paint.setColor(Color.parseColor("#FFFFFF"));
         paint.setShadowLayer(5,0,0, Color.parseColor("#30111111"));
 
         canvas.drawCircle(w/2,w/2,w/2,paint);
