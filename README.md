@@ -11,6 +11,6 @@
   }
   
   dependencies {
-	  implementation 'com.github.bigdongdong:ProcessBar:1.0' 
+	  implementation 'com.github.bigdongdong:ProcessBar:2.0' 
   }
 ```
