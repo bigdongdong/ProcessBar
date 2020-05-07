@@ -26,7 +26,6 @@ public class VerticalProcessBar extends RelativeLayout {
 
 
     private VerticalProcessOptions options ;
-    private Context context ;
     private Bar bar ;
     private int sliderW,sliderH ;
     private int width , height;
@@ -35,7 +34,6 @@ public class VerticalProcessBar extends RelativeLayout {
     public VerticalProcessBar(Context context , final VerticalProcessOptions options) {
         super(context);
 
-        this.context = context ;
         this.options = options ;
         this.setClipChildren(false);
         this.setWillNotDraw(false); //避免不绘制背景
@@ -128,7 +126,7 @@ public class VerticalProcessBar extends RelativeLayout {
                         case MotionEvent.ACTION_UP:
                         case MotionEvent.ACTION_CANCEL:
                             if(processListener != null){
-                                processListener.onFingerUp();
+                                processListener.onFingerUp(getCurrentProcess());
                             }
 
 
@@ -140,7 +138,6 @@ public class VerticalProcessBar extends RelativeLayout {
 
         }
 
-
     }
 
     @Override
@@ -151,7 +148,7 @@ public class VerticalProcessBar extends RelativeLayout {
         height = getMeasuredHeight() ;
     }
 
-    private int getCurrentProcess () {
+    public int getCurrentProcess () {
        int totalProcessH = height - 2 * options.barMargin ;
        int currentProcessH = 0 ;
        if(options.direction == GradientDrawable.Orientation.TOP_BOTTOM){
@@ -184,7 +181,6 @@ public class VerticalProcessBar extends RelativeLayout {
         options.initialProcess = process ;
         bar.postInvalidate();
     }
-
 
     private IProcessListener processListener ;
     public void setOnProcessListener(IProcessListener processListener){
@@ -252,28 +248,6 @@ public class VerticalProcessBar extends RelativeLayout {
                 path.addRect(rectf, Path.Direction.CCW);
                 path.close();
 
-//                if(h < options.barRadius || h > height - options.barRadius){
-//                    return path ;
-//                }
-//
-//                if(options.barRadius != 0){
-//                    //有圆角
-//                    path.moveTo(0,h);
-//                    path.lineTo(0,options.barRadius);
-//                    rectF.set(0,0,options.barRadius + options.barRadius,options.barRadius + options.barRadius);
-//                    path.arcTo(rectF,180,90);
-//                    path.lineTo(options.barWidth - options.barRadius , 0);
-//                    rectF.set(options.barWidth - options.barRadius  - options.barRadius,0,options.barWidth , options.barRadius + options.barRadius);
-//                    path.arcTo(rectF,270,90);
-//                    path.lineTo(options.barWidth,h);
-//                    path.close();
-//                }else{
-//                    //没有圆角直接添加矩形
-//                    rectF.set(0,0,options.barWidth,h);
-//                    path.addRect(rectF, Path.Direction.CCW);
-//                    path.close();
-//                }
-
             }else if(options.direction == GradientDrawable.Orientation.BOTTOM_TOP){
                 /*自下而上*/
                 int h = (int) (((100 - options.initialProcess) * 1.0f )/ 100 * height);
@@ -282,27 +256,6 @@ public class VerticalProcessBar extends RelativeLayout {
                 path.addRect(rectf, Path.Direction.CCW);
                 path.close();
 
-//                if(height - h < options.barRadius || height - h > height - options.barRadius){
-//                    return path ;
-//                }
-//
-//                if(options.barRadius != 0){
-//                    //有圆角
-//                    path.moveTo(0,h);
-//                    path.lineTo(0,height - options.barRadius );
-//                    rectF.set(0,height - options.barRadius - options.barRadius,options.barRadius + options.barRadius, height);
-//                    path.arcTo(rectF,180,-90);
-//                    path.lineTo(options.barWidth - options.barRadius , height);
-//                    rectF.set(options.barWidth - options.barRadius - options.barRadius,height - options.barRadius - options.barRadius,options.barWidth , height);
-//                    path.arcTo(rectF,90,-90);
-//                    path.lineTo(options.barWidth , h);
-//                    path.close();
-//                }else{
-//                    //没有圆角直接添加矩形
-//                    rectF.set(0,h,options.barWidth,height);
-//                    path.addRect(rectF, Path.Direction.CCW);
-//                    path.close();
-//                }
             }
 
             return path ;

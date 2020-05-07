@@ -20,5 +20,5 @@ public interface IProcessListener {
     /**
      * 手指抬起，失去焦点
      */
-    void onFingerUp();
+    void onFingerUp(int process);
 }

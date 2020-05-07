@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cxd.processbar.DefaultDragView;
+import com.cxd.processbar.DensityUtil;
 import com.cxd.processbar.IProcessListener;
 import com.cxd.processbar.TVDragView;
 import com.cxd.processbar.VerticalProcessBar;
@@ -26,25 +27,29 @@ public class MainActivity extends AppCompatActivity {
 
         final int[] process = {25};
 
-//        final TVDragView slider = new TVDragView(this);
+        DefaultDragView slider = new DefaultDragView(this);
+        int w = DensityUtil.dip2px(this,20);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(w,w);
+//        params.leftMargin = DensityUtil.dip2px(this,30 - 20) / 2  ;
+        slider.setLayoutParams(params);
 //        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(50,50);
 
-        View slider = LayoutInflater.from(this).inflate(R.layout.drag_view_layout,null,false);
-        slider.setLayoutParams(new RelativeLayout.LayoutParams(220,100));
-        final TextView tv = slider.findViewById(R.id.tv) ;
+//        View slider = LayoutInflater.from(this).inflate(R.layout.drag_view_layout,null,false);
+//        slider.setLayoutParams(new RelativeLayout.LayoutParams(220,100));
+//        final TextView tv = slider.findViewById(R.id.tv) ;
 
         final VerticalProcessOptions options = new VerticalProcessOptions.Builder()
                 .backColor(Color.parseColor("#80FFFFFF"))
-                .backRadius(40)
-                .barMargin(60)
+                .backRadius(DensityUtil.dip2px(this,12))
+                .barMargin(DensityUtil.dip2px(this,20))
                 .barColor(Color.parseColor("#DDDDDD"))
                 .barFillColor(Color.BLUE)
-                .barWidth(20)
-                .barRadius(20)
+                .barWidth(DensityUtil.dip2px(this,3))
+                .barRadius(DensityUtil.dip2px(this,1.5f))
                 .direction(GradientDrawable.Orientation.TOP_BOTTOM)
                 .initialProcess(process[0])
                 .slider(slider)
-                .sliderOffset(-90)
+                .sliderOffset(DensityUtil.dip2px(this,30 - 20) / 2)
                 .build();
 
         final VerticalProcessBar vpb = new VerticalProcessBar(this,options);
@@ -54,24 +59,24 @@ public class MainActivity extends AppCompatActivity {
 
 
         /*初始 tv不显示*/
-        tv.setVisibility(View.INVISIBLE);
+//        tv.setVisibility(View.INVISIBLE);
         vpb.setOnProcessListener(new IProcessListener() {
             @Override
             public void onProcess(int process) {
-                tv.setText(process+"");
+//                tv.setText(process+"");
 
             }
 
             @Override
             public void onFingerDown() {
                 vpb.setAlpha(1.0f);
-                tv.setVisibility(View.VISIBLE);
+//                tv.setVisibility(View.VISIBLE);
             }
 
             @Override
-            public void onFingerUp() {
+            public void onFingerUp(int process) {
                 vpb.setAlpha(0.5f);
-                tv.setVisibility(View.INVISIBLE);
+//                tv.setVisibility(View.INVISIBLE);
             }
         });
 

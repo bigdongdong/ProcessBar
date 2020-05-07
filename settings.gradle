@@ -1,2 +1,2 @@
-include ':app', ':moudle'
+include ':app', ':processbar'
 rootProject.name='ProcessBar'
